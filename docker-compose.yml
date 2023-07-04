@@ -8,11 +8,17 @@ services:
   postgres:
     image: postgres
     ports:
-      - "127.0.0.1:5432:5432"
+      - "outline.clcsgr9ffari.us-east-1.rds.amazonaws.com:5432"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${{ secrets.SECRET_KEY }}
       POSTGRES_DB: outline
+      SECRET_KEY: ${{ secrets.RDS_PSSWD }}
+      DATABASE_URL: postgres://postgres:pass@outline.clcsgr9ffari.us-east-1.rds.amazonaws.com:5432/outline
+      REDIS_URL: redis://outline.ayiuxr.ng.0001.use1.cache.amazonaws.com:6379
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: us-east-1
     user: "postgres:postgres"
   s3:
     image: lphoward/fake-s3
